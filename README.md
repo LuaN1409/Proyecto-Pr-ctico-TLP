@@ -1,1 +1,7 @@
-# Proyecto-Pr-ctico-TLP
+# Proyecto-Practico-TLP
+
+Sintaxix Compatible
+
+Clave = Valor
+{} = Objetos
+[] = Listas

@@ -1,0 +1,108 @@
+# Juego de Tetris 
+juego = "Tetris"
+título = "Tetris Dimensional"
+
+# Configuración de Pantalla
+
+pantalla = {
+    ancho: 10,
+    alto: 20,
+    color_fondo: "negro",
+    grid_visible: true,
+    color_grid: "gris_oscuro"
+}
+
+#Sistema de Piezas normales (Las 7 Clásicas)
+
+Piezas = {
+    colores = {
+        I: "cyan",
+        O: "amarillo",
+        T: "magenta",
+        S: "verde",
+        Z: "rojo",
+        J: "azul",
+        L: "naranja"
+    }
+}
+
+# Piezas especiales sencillas
+piezas_especiales: [
+    {
+        nombre: "bomba",
+        color: "rojo_brillante",
+        efecto: "eliminar_fila",
+        frecuencia: 0.05
+    },
+    {
+        nombre: "bloque_lento",
+        color: "azul_hielo",
+        efecto: "ralentizar_caída",
+        duración: 3000,
+        frecuencia: 0.03
+    }
+]
+
+# Sistema de niveles
+
+niveles = [
+    {
+        numero: 1,
+        nombre: "Inicio",
+        velocidad_caida: 1000,
+        lineas_para_siguiente: 10
+    },
+    {
+        numero: 2,
+        nombre: "Intermedio",
+        velocidad_caida: 700,
+        lineas_para_siguiente: 15
+    },
+    {
+        numero: 3,
+        nombre: "Avanzado",
+        velocidad_caida: 400,
+        lineas_para_siguiente: 20
+    }
+]
+
+# Controles Básicos
+controles = {
+    mover_izquierda: "LEFT",
+    mover_derecha: "RIGHT",
+    rotar: "UP",
+    caida_rapida: "DOWN",
+    hard_drop: "SPACE",
+    mantener_pieza: "C",
+    pausa: "P"
+}
+
+# Sistema de Puntuación
+
+puntuación = {
+    puntos_por_linea: 100,
+    puntos_por_doble: 300,
+    puntos_por_triple: 500,
+    puntos_por_tetris: 800,
+
+    combo = {
+        activado: true,
+        multiplicador_base: 50,
+        max_multiplicador: 5
+    }
+}
+
+# Mecánicas extras
+
+mecanicas = {
+    hold_piece: true,
+    preview_pieces: 3,
+    ghost_piece: true,
+    lock_delay: 500
+}
+
+# Condiciones de fin de juego
+fin_juego = [
+    "pieza_bloquea_en_spawn",
+    "maxima_altura_alcanzada"
+]
