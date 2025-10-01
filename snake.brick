@@ -1,0 +1,92 @@
+# Juego de Snake - Lenguaje.brik
+juego = "snake"
+titulo = "Snake Dimensional"
+
+# Configuración de pantalla
+pantalla = {
+  ancho: 30,
+  alto: 20,
+  color_fondo: "negro",
+  grid_visible: true
+}
+
+# Configuración de la serpiente y comida
+snake = {
+  color: "verde",
+  velocidad_inicial: 5,
+  crecimiento_por_fruta: 1
+}
+
+frutas = {
+  color_normal: "rojo",
+  puntos_normal: 10,
+  color_especial: "amarillo",
+  puntos_especial: 50,
+  frecuencia_especial: 0.1   # probabilidad de aparición
+}
+
+# Obstáculos simples
+obstaculos = [
+  { tipo: "pared", posiciones: [ [5,5], [5,6], [5,7] ] },
+  { tipo: "roca", posiciones: [ [10,10], [11,10] ] }
+]
+
+# Sistema de niveles (velocidad aumenta con el progreso)
+niveles = [
+  {
+    numero: 1,
+    nombre: "Inicio",
+    velocidad: 5,
+    frutas_para_siguiente: 10
+  },
+  {
+    numero: 2,
+    nombre: "Intermedio",
+    velocidad: 8,
+    frutas_para_siguiente: 15
+  },
+  {
+    numero: 3,
+    nombre: "Avanzado",
+    velocidad: 12,
+    frutas_para_siguiente: 0,   # no hay siguiente
+    es_final: true
+  }
+]
+
+# Controles básicos
+controles = {
+  mover_arriba: "UP",
+  mover_abajo: "DOWN",
+  mover_izquierda: "LEFT",
+  mover_derecha: "RIGHT",
+  pausa: "P"
+}
+
+# Sistema de puntuación
+puntuacion = {
+  puntos_por_fruta: 10,
+  puntos_por_fruta_especial: 50,
+  combo = {
+    activado: true,
+    frutas_consecutivas: 3,
+    bonus: 100
+  }
+}
+
+# Mecánicas opcionales
+mecanicas = {
+  paredes_solidas: true,     # colisión con borde = perder
+  turbo: {
+    activado: true,
+    duracion: 5,
+    cooldown: 20
+  }
+}
+
+# Condiciones de fin de juego
+fin_juego = [
+  "choque_con_pared",
+  "choque_con_cola",
+  "nivel_final_completado"
+]
