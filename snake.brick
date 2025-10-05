@@ -1,92 +1,135 @@
-# Juego de Snake - Lenguaje.brik
+# juego de snake dimensional
+
 juego = "snake"
-titulo = "Snake Dimensional"
+titulo = "snake dimensional"
 
-# Configuración de pantalla
+# configuración de pantalla
 pantalla = {
-  ancho: 30,
-  alto: 20,
-  color_fondo: "negro",
-  grid_visible: true
+    ancho = 30,
+    alto = 20,
+    tamano_celda = 20,
+    color_fondo = "negro",
+    grid_visible = true,
+    color_grid = "gris_oscuro"
 }
 
-# Configuración de la serpiente y comida
-snake = {
-  color: "verde",
-  velocidad_inicial: 5,
-  crecimiento_por_fruta: 1
+# configuración de la serpiente
+serpiente = {
+    color_cabeza = "verde_claro",
+    color_cuerpo = "verde",
+    longitud_inicial = 3,
+    posicion_inicial = [15, 10],
+    direccion_inicial = "RIGHT",
+    crecimiento_por_fruta = 1
 }
 
+# tipos de frutas
 frutas = {
-  color_normal: "rojo",
-  puntos_normal: 10,
-  color_especial: "amarillo",
-  puntos_especial: 50,
-  frecuencia_especial: 0.1   # probabilidad de aparición
+    manzana = {
+        color = "rojo",
+        puntos = 10,
+        efecto = "crecer"
+    },
+    banana = {
+        color = "amarillo",
+        puntos = 50,
+        efecto = "puntos_extra",
+        tiempo_vida = 5000,
+        probabilidad = 0.15
+    },
+    fresa = {
+        color = "rosa",
+        puntos = 20,
+        efecto = "ralentizar",
+        duracion_efecto = 4000,
+        tiempo_vida = 6000,
+        probabilidad = 0.10
+    }
 }
 
-# Obstáculos simples
-obstaculos = [
-  { tipo: "pared", posiciones: [ [5,5], [5,6], [5,7] ] },
-  { tipo: "roca", posiciones: [ [10,10], [11,10] ] }
-]
+# portales dimensionales
+portales = {
+    activados = true,
+    cantidad_pares = 2,
+    color_entrada = "azul",
+    color_salida = "naranja",
+    duracion = 15000,
+    cooldown = 10000
+}
 
-# Sistema de niveles (velocidad aumenta con el progreso)
+# obstáculos por nivel
+obstaculos = {
+    generacion = "aleatoria",
+    cantidad_minima = 1,
+    cantidad_maxima = 3,
+    longitud_minima = 2,
+    longitud_maxima = 4,
+    margen_spawn = 3,
+    color = "gris",
+    advertencia_color = "amarillo_claro",
+    tiempo_advertencia = 2000
+}
+
+# niveles de dificultad
 niveles = [
-  {
-    numero: 1,
-    nombre: "Inicio",
-    velocidad: 5,
-    frutas_para_siguiente: 10
-  },
-  {
-    numero: 2,
-    nombre: "Intermedio",
-    velocidad: 8,
-    frutas_para_siguiente: 15
-  },
-  {
-    numero: 3,
-    nombre: "Avanzado",
-    velocidad: 12,
-    frutas_para_siguiente: 0,   # no hay siguiente
-    es_final: true
-  }
+    { 
+        numero = 1, 
+        nombre = "inicio", 
+        velocidad = 200, 
+        frutas_requeridas = 10,
+        portales = false,
+        obstaculos = 0
+    },
+    { 
+        numero = 2, 
+        nombre = "portal", 
+        velocidad = 150, 
+        frutas_requeridas = 15,
+        portales = true,
+        obstaculos = 2
+    },
+    { 
+        numero = 3, 
+        nombre = "caos", 
+        velocidad = 100, 
+        frutas_requeridas = 20,
+        portales = true,
+        obstaculos = 4
+    }
 ]
 
-# Controles básicos
+# controles
 controles = {
-  mover_arriba: "UP",
-  mover_abajo: "DOWN",
-  mover_izquierda: "LEFT",
-  mover_derecha: "RIGHT",
-  pausa: "P"
+    arriba = "UP",
+    abajo = "DOWN",
+    izquierda = "LEFT",
+    derecha = "RIGHT",
+    pausa = "P"
 }
 
-# Sistema de puntuación
+# sistema de puntuación
 puntuacion = {
-  puntos_por_fruta: 10,
-  puntos_por_fruta_especial: 50,
-  combo = {
-    activado: true,
-    frutas_consecutivas: 3,
-    bonus: 100
-  }
+    por_fruta_normal = 10,
+    por_fruta_especial = 50,
+    por_usar_portal = 25,
+    combo = {
+        activado = true,
+        frutas_consecutivas = 3,
+        bonus_inicial = 100,
+        incremento = 50,
+        max_bonus = 500
+    }
 }
 
-# Mecánicas extras
+# mecánicas del juego
 mecanicas = {
-  paredes_solidas: true,     
-  turbo: {
-    activado: true,
-    duracion: 5,
-    cooldown: 20
-  }
+    paredes_solidas = true,
+    atravesar_bordes = false
 }
 
-# Condiciones de fin de juego
+# condiciones de fin
 fin_juego = [
-  "choque_con_pared",
-  "choque_con_cola",
-  "nivel_final_completado"
+    "choque_con_pared",
+    "choque_con_cuerpo",
+    "choque_con_obstaculo"
 ]
