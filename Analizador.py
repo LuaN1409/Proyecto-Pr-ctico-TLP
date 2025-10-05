@@ -1,197 +1,125 @@
-# -*- coding: utf-8 -*-
-"""
-analizador de lenguaje .brik
-"""
-
-import json
 import re
-import os
+import json
+import sys
 
-class Tokenizer:
-    def __init__(self, codigo):
-        self.codigo = codigo
-        self.tokens = []
+# ---------------------------
+# Lexer
+# ---------------------------
+TOKENS = [
+    ("STRING", r'"[^"]*"'),
+    ("NUMBER", r'\d+(\.\d+)?'),
+    ("IDENT", r'[a-zA-Z_][a-zA-Z0-9_]*'),
+    ("EQUALS", r'='),
+    ("LBRACKET", r'\['),
+    ("RBRACKET", r'\]'),
+    ("LBRACE", r'\{'),
+    ("RBRACE", r'\}'),
+    ("COMMA", r','),
+    ("COLON", r':'),
+    ("TRUE", r'true'),
+    ("FALSE", r'false'),
+    ("NEWLINE", r'\n'),
+    ("WHITESPACE", r'[ \t]+'),
+    ("COMMENT", r'#.*')
+]
 
-    def tokenizar(self):
-        lineas = self.codigo.splitlines()
-        for linea in lineas:
-            linea = linea.strip()
-            if not linea or linea.startswith('#'):
-                continue
-            
-            # buscar strings, números, operadores e identificadores
-            patron = r'"([^"]*)"|(\d+\.?\d*)|({|}|\[|\]|=|:|,)|(\w+)'
-            matches = re.findall(patron, linea)
-            
-            for match in matches:
-                if match[0]:  # string
-                    self.tokens.append(('STRING', match[0]))
-                elif match[1]:  # número
-                    if '.' in match[1]:
-                        self.tokens.append(('NUMBER', float(match[1])))
-                    else:
-                        self.tokens.append(('NUMBER', int(match[1])))
-                elif match[2]:  # operador
-                    self.tokens.append(('OPERATOR', match[2]))
-                elif match[3]:  # identificador o booleano
-                    valor = match[3]
-                    if valor.lower() in ['true', 'false']:
-                        self.tokens.append(('BOOLEAN', valor.lower() == 'true'))
-                    else:
-                        self.tokens.append(('IDENTIFIER', valor))
-        
-        return self.tokens
+token_regex = "|".join(f"(?P<{name}>{pattern})" for name, pattern in TOKENS)
+token_re = re.compile(token_regex)
 
-class Parser:
-    def __init__(self, tokens):
-        self.tokens = tokens
-        self.pos = 0
-        self.ast = {}
+def lexer(text):
+    tokens = []
+    for match in token_re.finditer(text):
+        kind = match.lastgroup
+        value = match.group()
+        if kind in ("WHITESPACE", "COMMENT"):
+            continue
+        if kind == "STRING":
+            value = value.strip('"')
+        if kind == "NUMBER":
+            value = float(value) if "." in value else int(value)
+        if kind == "TRUE":
+            value = True
+        if kind == "FALSE":
+            value = False
+        tokens.append((kind, value))
+    return tokens
 
-    def parsear(self):
-        while self.pos < len(self.tokens):
-            if self.peek() is None:
-                break
-            
-            # obtener clave
-            clave = self.avanzar()
-            if clave[0] != 'IDENTIFIER':
-                raise SyntaxError(f"se esperaba identificador, se encontró {clave[1]}")
-            
-            # obtener '='
-            igual = self.avanzar()
-            if igual[1] != '=':
-                raise SyntaxError(f"se esperaba '=', se encontró {igual[1]}")
-            
-            # obtener valor
-            valor = self.parsear_valor()
-            self.ast[clave[1]] = valor
-        
-        # validación básica
-        self.validar()
-        return self.ast
+# ---------------------------
+# Parser (muy sencillo)
+# ---------------------------
+def parse(tokens):
+    ast = {}
+    i = 0
+    while i < len(tokens):
+        if tokens[i][0] == "IDENT":
+            key = tokens[i][1]
+            if tokens[i+1][0] != "EQUALS":
+                raise SyntaxError(f"Se esperaba '=' después de {key}")
+            value, jump = parse_value(tokens, i+2)
+            ast[key] = value
+            i = jump
+        else:
+            i += 1
+    return ast
 
-    def validar(self):
-        """validación mínima del ast"""
-        if 'juego' not in self.ast:
-            raise SyntaxError("falta campo obligatorio: 'juego'")
-        if 'titulo' not in self.ast:
-            raise SyntaxError("falta campo obligatorio: 'titulo'")
-        if 'pantalla' not in self.ast:
-            raise SyntaxError("falta campo obligatorio: 'pantalla'")
+def parse_value(tokens, i):
+    """Devuelve (valor, nuevo_indice)"""
+    t, v = tokens[i]
 
-    def avanzar(self):
-        if self.pos < len(self.tokens):
-            token = self.tokens[self.pos]
-            self.pos += 1
-            return token
-        return None
+    if t in ("STRING", "NUMBER", "TRUE", "FALSE"):
+        return v, i+1
 
-    def peek(self):
-        if self.pos < len(self.tokens):
-            return self.tokens[self.pos]
-        return None
+    elif t == "LBRACKET":  # lista
+        arr = []
+        i += 1
+        while tokens[i][0] != "RBRACKET":
+            val, i = parse_value(tokens, i)
+            arr.append(val)
+            if tokens[i][0] == "COMMA":
+                i += 1
+        return arr, i+1
 
-    def parsear_valor(self):
-        token = self.peek()
-        if token is None:
-            raise SyntaxError("se esperaba un valor")
-        
-        tipo, valor = token
-        
-        if tipo in ('STRING', 'NUMBER', 'BOOLEAN'):
-            self.pos += 1
-            return valor
-        elif tipo == 'OPERATOR' and valor == '{':
-            return self.parsear_bloque()
-        elif tipo == 'OPERATOR' and valor == '[':
-            return self.parsear_lista()
-        
-        raise SyntaxError(f"valor inesperado: {valor}")
+    elif t == "LBRACE":  # diccionario
+        obj = {}
+        i += 1
+        while tokens[i][0] != "RBRACE":
+            if tokens[i][0] != "STRING" and tokens[i][0] != "IDENT":
+                raise SyntaxError("Clave inválida en objeto")
+            key = tokens[i][1]
+            if tokens[i+1][0] != "COLON":
+                raise SyntaxError("Se esperaba ':' en objeto")
+            val, i = parse_value(tokens, i+2)
+            obj[key] = val
+            if tokens[i][0] == "COMMA":
+                i += 1
+        return obj, i+1
 
-    def parsear_bloque(self):
-        self.avanzar()  # consume '{'
-        bloque = {}
-        
-        while self.peek() and self.peek()[1] != '}':
-            clave = self.avanzar()
-            if clave[0] != 'IDENTIFIER':
-                raise SyntaxError(f"se esperaba identificador en bloque")
-            
-            separador = self.avanzar()
-            if separador[1] not in ['=', ':']:
-                raise SyntaxError(f"se esperaba '=' o ':'")
-            
-            valor = self.parsear_valor()
-            bloque[clave[1]] = valor
-            
-            if self.peek() and self.peek()[1] == ',':
-                self.avanzar()
-        
-        if not self.peek() or self.peek()[1] != '}':
-            raise SyntaxError("se esperaba '}' para cerrar bloque")
-        
-        self.avanzar()  # consume '}'
-        return bloque
+    else:
+        raise SyntaxError(f"Valor inesperado {t}")
 
-    def parsear_lista(self):
-        self.avanzar()  # consume '['
-        lista = []
-        
-        while self.peek() and self.peek()[1] != ']':
-            item = self.parsear_valor()
-            lista.append(item)
-            
-            if self.peek() and self.peek()[1] == ',':
-                self.avanzar()
-        
-        if not self.peek() or self.peek()[1] != ']':
-            raise SyntaxError("se esperaba ']' para cerrar lista")
-        
-        self.avanzar()  # consume ']'
-        return lista
-
-def cargar_archivo(ruta):
-    if not os.path.exists(ruta):
-        print(f"error: archivo '{ruta}' no encontrado")
-        return None
-    
-    with open(ruta, 'r', encoding='utf-8') as f:
-        return f.read()
-
-def guardar_ast(ast, ruta):
-    with open(ruta, 'w', encoding='utf-8') as f:
-        json.dump(ast, f, indent=2, ensure_ascii=False)
-    print(f"ast guardado en '{ruta}'")
-
+# ---------------------------
+# Main
+# ---------------------------
 def main():
-    print("=== analizador de lenguaje .brik ===\n")
-    
-    archivo = input("archivo a analizar (snake.brik / tetris.brik): ").strip()
-    if not archivo:
-        archivo = "tetris.brik"
-    
-    codigo = cargar_archivo(archivo)
-    if not codigo:
+    if len(sys.argv) < 2:
+        print("Uso: python analizador.py archivo.brik")
         return
-    
-    try:
-        print("analizando...")
-        tokenizer = Tokenizer(codigo)
-        tokens = tokenizer.tokenizar()
-        
-        parser = Parser(tokens)
-        ast = parser.parsear()
-        
-        guardar_ast(ast, "arbol.ast")
-        print(f"✓ análisis completado")
-        print(f"juego: {ast.get('juego')}")
-        print(f"campos: {len(ast)}")
-        
-    except SyntaxError as e:
-        print(f"error de sintaxis: {e}")
-    except Exception as e:
-        print(f"error: {e}")
 
+    filename = sys.argv[1]
+    with open(filename, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    tokens = lexer(text)
+    ast = parse(tokens)
+
+    with open("arbol.ast", "w", encoding="utf-8") as f:
+        json.dump(ast, f, indent=2, ensure_ascii=False)
+
+    print("✅ Análisis completado. AST guardado en arbol.ast")
+
+
+# -------------------------------
+# Zona de ejecución
+# -------------------------------
 if __name__ == "__main__":
     main()
