@@ -1,5 +1,13 @@
 # Proyecto-Practico-TLP
 
+Autores:
+
+María José Restrepo Osorio
+Diego Moncada Gómez
+
+Asignatura: Teoría de Lenguajes de Programación
+Profesor: Fernan Alonso Villa Garzon
+
 Sobre el Proyecto
 
 Este proyecto implementa un analizador léxico y sintáctico para BRIK, lenguaje diseñado para definir las reglas y configuraciones de los siguientes juegos:
@@ -31,11 +39,3 @@ Valida la estructura básica del juego (juego, titulo, pantalla).
 El AST se guarda automáticamente como arbol.ast en formato JSON.
 
 Básicamente, el analizador lee uno el juego.brik que quieras, realiza el proceso de tokenización (lexer), genera un árbol de sintaxis abstracta (AST) y lo guarda en un archivo arbol.ast en formato JSON.
-
-Autores:
-
-María José Restrepo Osorio
-Diego Moncada Gómez
-
-Asignatura: Teoría de Lenguajes de Programación
-Profesor: Fernan Alonso Villa Garzon
