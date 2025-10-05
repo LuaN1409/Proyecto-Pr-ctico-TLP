@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-analizador de lenguaje .brick
+analizador de lenguaje .brik
 """
 
 import json
@@ -165,11 +165,11 @@ def guardar_ast(ast, ruta):
     print(f"ast guardado en '{ruta}'")
 
 def main():
-    print("=== analizador de lenguaje .brick ===\n")
+    print("=== analizador de lenguaje .brik ===\n")
     
-    archivo = input("archivo a analizar (snake.brick / tetris.brick): ").strip()
+    archivo = input("archivo a analizar (snake.brik / tetris.brik): ").strip()
     if not archivo:
-        archivo = "tetris.brick"
+        archivo = "tetris.brik"
     
     codigo = cargar_archivo(archivo)
     if not codigo:
