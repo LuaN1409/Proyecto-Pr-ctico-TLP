@@ -74,9 +74,9 @@ puntuacion = {
   }
 }
 
-# Mecánicas opcionales
+# Mecánicas extras
 mecanicas = {
-  paredes_solidas: true,     # colisión con borde = perder
+  paredes_solidas: true,     
   turbo: {
     activado: true,
     duracion: 5,
