@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Analizador de Lenguaje .brik
-Implementado en Python 3.0+
-Adaptado para los archivos Snake.brik y Tetris.brik
-@author: Luan
-Basado en la versión del profesor (Nadie Team)
 """
 
 import json
