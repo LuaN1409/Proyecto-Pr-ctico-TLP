@@ -60,12 +60,12 @@ Para verificar el funcionamiento del motor existen dos alternativas:
 
 ## Archivos incluidos
 
-* `motor_runtime.py` — bucle y coordinación.
-* `render.py` — render y ventana.
-* `input.py` — gestor de teclado.
-* `analizador.py` (o nombre similar) — tokenizer + parser (Entrega 1).
-* `arbol.ast` — ejemplo de salida del analizador (JSON).
-* `dist/` — ejecutable empaquetado (opcional).
+* `motor_runtime.py` - bucle y coordinación.
+* `render.py` - render y ventana.
+* `input.py` - gestor de teclado.
+* `analizador.py` (o nombre similar) - tokenizer + parser (Entrega 1).
+* `arbol.ast` - ejemplo de salida del analizador (JSON).
+* `dist/` - ejecutable empaquetado (opcional).
 
 Incluye también este `README.md` y cualquier ejemplo `.brik` que usemos para probar.
 
@@ -73,7 +73,7 @@ Incluye también este `README.md` y cualquier ejemplo `.brik` que usemos para pr
 
 ## Requisitos y compatibilidad
 
-* **Python:** 2.7.18 (32 bits) — elegimos esta versión por compatibilidad con Windows XP.
+* **Python:** 2.7.18 (32 bits) - elegimos esta versión por compatibilidad con Windows XP.
 * **Dependencias externas:** ninguna (se usa `tkinter`, que viene con Python).
 * **Plataformas:** diseñado para Windows XP; funciona en Windows 7/10 si ejecutas con Python 2.7.
 * **Resolución demo:** 640×480.
