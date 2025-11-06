@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-analizador de lenguaje .brik - compatible con Python 2.7
+analizador de lenguaje .brik - versión final para Python 2.7
 """
 
 import json
@@ -180,12 +180,8 @@ def guardar_ast(ast, ruta):
 
 def main():
     print("=== analizador de lenguaje .brik ===\n")
-    
-    try:
-        archivo = raw_input("archivo a analizar (snake.brik / tetris.brik): ").strip()
-    except NameError:
-        archivo = input("archivo a analizar (snake.brik / tetris.brik): ").strip()
 
+    archivo = raw_input("archivo a analizar (snake.brik / tetris.brik): ").strip()
     if not archivo:
         archivo = "tetris.brik"
     
@@ -214,3 +210,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
