@@ -1,144 +1,80 @@
 # Proyecto-Practico-TLP
 
-Autores:
-María José Restrepo Osorio
-Diego Moncada Gómez
-
-Asignatura: **Teoría de Lenguajes de Programación**
-Profesor: **Fernan Alonso Villa Garzón**
+**Autores:** María José Restrepo Osorio · Diego Moncada Gómez
+**Asignatura:** Teoría de Lenguajes de Programación
+**Profesor:** Fernan Alonso Villa Garzón
 
 ---
 
-## Sobre la Entrega 1
+## Resumen de lo hecho
 
-Este proyecto implementa un analizador léxico y sintáctico para **BRIK**, lenguaje diseñado para definir las reglas y configuraciones de los siguientes juegos:
+En la primera parte construimos un analizador para el lenguaje **BRIK**. Ese analizador lee archivos `.brik` (por ejemplo `tetris.brik` y `snake.brik`), los tokeniza y arma un árbol de sintaxis (AST) que guardamos en `arbol.ast` como JSON. El trabajo fue: leer el texto fuente, reconocer cadenas, números, identificadores, operadores y booleanos, y validar que el archivo contenga los campos mínimos que esperamos para definir un juego (como `juego`, `titulo`, `pantalla`).
 
-- **Tetris.brik** — Una versión dimensional con piezas especiales y niveles progresivos.
-- **Snake.brik** — Una versión extendida con frutas especiales, portales y obstáculos.
-
-Respecto al analizador y sus componentes:
-
-1. **Tokenizer (Lexer)**
-
-   - Separa el código fuente en tokens (identificadores, números, cadenas, operadores y booleanos).
-   - Usa expresiones regulares para reconocer patrones.
-   - Ignora comentarios (`#`) y líneas vacías.
-
-2. **Parser (Análisis Sintáctico)**
-
-   - Construye una estructura jerárquica (AST) a partir de los tokens.
-   - Reconoce bloques `{}`, listas `[]` y asignaciones `=` o `:`.
-   - Valida la estructura básica del juego (`juego`, `titulo`, `pantalla`).
-
-3. **Generador de AST**
-
-   - El AST se guarda automáticamente como **arbol.ast** en formato JSON.
-   - El analizador permite leer cualquier archivo `.brik`, procesarlo y generar su representación estructurada.
+Con ese AST definido, diseñamos e implementamos el motor gráfico de la entrega 2. La idea fue construir un motor **independiente** de la lógica del juego: el analizador aporta los datos estructurados y el motor aporta la capa de ejecución —ventana, bucle, entrada y render— para poder ejecutar cualquier juego descrito con BRIK sin tocar el núcleo del motor.
 
 ---
 
-## Sobre la Entrega 2 — El Motor de Juego y Renderizado
+## ¿Qué hace el motor?
 
-La segunda entrega se centra en la implementación del **motor gráfico y de juego**.
-El objetivo fue desarrollar un entorno capaz de mostrar elementos visuales, procesar entradas del usuario y mantener un bucle principal de ejecución — todo de forma **independiente de la lógica de los juegos específicos (Snake o Tetris)**.
-
-### Componentes del motor
-
-#### 1. `motor_runtime.py` — Bucle principal del juego
-
-Implementa el **ciclo base del motor**, responsable de tres fases en cada frame:
-
-1. **Gestión de eventos (Entrada):**
-
-   - Detecta pulsaciones de teclas (flechas y tecla Escape).
-
-2. **Actualización lógica:**
-
-   - Modifica la posición del objeto en pantalla según la entrada del usuario.
-
-3. **Renderizado:**
-
-   - Dibuja los elementos (ladrillo y texto) en una ventana de 640×480 píxeles.
-
-El bucle se ejecuta continuamente hasta que el usuario presiona la tecla _Escape_, garantizando una tasa aproximada de 60 FPS.
+El motor ejecuta un bucle clásico: lee entradas, actualiza estado y renderiza la pantalla a ~60 FPS. En la demo actual ese ciclo mueve un ladrillo rojo con las flechas y muestra un texto informativo arriba. Sirve para probar que la comunicación entre los módulos (entrada ↔ lógica ↔ render) funciona correctamente y que el motor puede servir como base para ejecutar juegos a partir de datos (el AST).
 
 ---
 
-#### 2. `render.py` — Módulo de Renderizado
+## Componentes principales
 
-Maneja la **creación y actualización de la ventana** gráfica utilizando la librería estándar `tkinter` (inclusa en Python 2.7).
-Proporciona funciones clave para la abstracción gráfica:
+**motor_runtime.py**
+Es el punto de entrada y coordina el bucle del juego. Lee las teclas activas, calcula la nueva posición del ladrillo, aplica límites y llama a `render` para dibujar.
 
-- `dibujar_ladrillo(x, y, color, tamaño)` — Dibuja un bloque en las coordenadas indicadas.
-- `dibujar_texto(x, y, texto, color, tamaño)` — Muestra texto en pantalla (mensajes o puntuación).
-- `limpiar()` — Borra el contenido previo antes de redibujar.
-- `actualizar()` — Refresca el lienzo en cada ciclo.
+**render.py**
+Se encarga de crear la ventana (640×480) y de las operaciones de dibujo básicas: limpiar, dibujar ladrillos y texto, y actualizar el lienzo. Está implementado con `tkinter` para mantener compatibilidad con Python 2.7 y Windows XP.
 
-Este módulo garantiza compatibilidad total con **Windows XP y Python 2.7**, sin dependencias externas.
+**input.py**
+Gestiona las pulsaciones y liberaciones de teclas usando eventos de `tkinter`. Mantiene un conjunto de teclas activas y expone `tecla_activa(tecla)` para consultar el estado en cualquier momento.
 
----
-
-#### 3. `input.py` — Control de Entradas
-
-Administra la interacción del usuario mediante las teclas.
-Usa los eventos de `tkinter` para registrar las pulsaciones y liberaciones en tiempo real.
-Permite detectar si una tecla específica está activa mediante:
-
-```python
-entrada.tecla_activa("Left")
-```
-
-Las teclas soportadas en la demostración incluyen:
-
-- **Flechas de dirección:** Mueven el ladrillo rojo.
-- **Escape:** Finaliza la ejecución del motor.
+**analizador (Entrega 1)**
+Tokenizer + Parser que convierten `.brik` en `arbol.ast` (JSON). Es la pieza que transforma la definición textual del juego en datos estructurados que el motor puede consumir.
 
 ---
 
-### Diseño del Motor
+## Cómo probarlo
 
-El motor mantiene una estructura modular, dividida en tres capas:
+Para verificar el funcionamiento del motor existen dos alternativas:
 
-1. **Entrada:** Captura las acciones del usuario.
-2. **Lógica:** Interpreta la entrada y actualiza el estado interno.
-3. **Render:** Dibuja el resultado visual.
+1. **Ejecutable (.exe):**
+   Se puede ejecutar directamente desde el archivo `dist/Ejecutable.exe`.
+   Es posible que Windows muestre una advertencia debido a que el archivo no está firmado digitalmente. En caso de duda, se recomienda analizarlo con **VirusTotal** o permitir su ejecución desde la ventana de **Propiedades → Desbloquear**.
 
-Esta arquitectura se inspira en los principios de **Game Loop** y **abstracción por capas**, permitiendo en futuras entregas reemplazar o extender los módulos sin alterar la base.
+2. **Ejecución desde código (recomendado):**
+   Instalar **Python 2.7.18 (32 bits)** y, desde la carpeta raíz del proyecto, ejecutar el siguiente comando en la terminal:
 
----
+   ```bash
+   python motor_runtime.py
+   ```
 
-### Ejecución
-
-Para probar el motor:
-
-```bash
-python motor_runtime.py
-```
-
-Se abrirá una ventana de 640×480 con un ladrillo rojo que se puede mover con las flechas.
-El sistema renderiza texto en la parte superior y se cierra con la tecla **Escape**.
+   Al iniciar, se abrirá una ventana de **640×480 píxeles** donde se visualizará un ladrillo rojo que puede moverse utilizando las teclas de dirección.
+   El programa finaliza al presionar la tecla **Escape**.
 
 ---
 
-### Compatibilidad
+## Archivos incluidos
 
-- Lenguaje: **Python 2.7.18 (32 bits)**
-- Librerías externas: **Ninguna (usa solo `tkinter`)**
-- Sistemas compatibles: **Windows XP, Windows 7, Windows 10**
+* `motor_runtime.py` — bucle y coordinación.
+* `render.py` — render y ventana.
+* `input.py` — gestor de teclado.
+* `analizador.py` (o nombre similar) — tokenizer + parser (Entrega 1).
+* `arbol.ast` — ejemplo de salida del analizador (JSON).
+* `dist/` — ejecutable empaquetado (opcional).
 
----
-
-### Entregables de la Fase 2
-
-- `motor_runtime.py` — Bucle del juego y lógica básica.
-- `render.py` — Sistema de renderizado.
-- `input.py` — Control de entradas del usuario.
-- `README.md` — Documentación técnica y de ejecución.
+Incluye también este `README.md` y cualquier ejemplo `.brik` que usemos para probar.
 
 ---
 
-### Próximos pasos (para la Entrega 3)
+## Requisitos y compatibilidad
 
-En la siguiente fase, se integrará este motor con los juegos definidos en los archivos `.brik`, de modo que el motor pueda cargar dinámicamente las configuraciones (pantalla, objetos, niveles) y renderizarlas de manera automática.
+* **Python:** 2.7.18 (32 bits) — elegimos esta versión por compatibilidad con Windows XP.
+* **Dependencias externas:** ninguna (se usa `tkinter`, que viene con Python).
+* **Plataformas:** diseñado para Windows XP; funciona en Windows 7/10 si ejecutas con Python 2.7.
+* **Resolución demo:** 640×480.
+* **Controles:** flechas para mover, Escape para salir.
 
 ---
