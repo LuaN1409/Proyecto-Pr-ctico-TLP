@@ -60,7 +60,6 @@
   ('struct', 'C:\\Python27\\lib\\struct.py', 'PYMODULE'),
   ('threading', 'C:\\Python27\\lib\\threading.py', 'PYMODULE'),
   ('_threading_local', 'C:\\Python27\\lib\\_threading_local.py', 'PYMODULE'),
-  ('traceback', 'C:\\Python27\\lib\\traceback.py', 'PYMODULE'),
   ('warnings', 'C:\\Python27\\lib\\warnings.py', 'PYMODULE'),
   ('UserDict', 'C:\\Python27\\lib\\UserDict.py', 'PYMODULE'),
   ('os2emxpath', 'C:\\Python27\\lib\\os2emxpath.py', 'PYMODULE'),
@@ -332,5 +331,6 @@
   ('FixTk', 'C:\\Python27\\lib\\lib-tk\\FixTk.py', 'PYMODULE'),
   ('ctypes', 'C:\\Python27\\lib\\ctypes\\__init__.py', 'PYMODULE'),
   ('ctypes._endian', 'C:\\Python27\\lib\\ctypes\\_endian.py', 'PYMODULE'),
+  ('traceback', 'C:\\Python27\\lib\\traceback.py', 'PYMODULE'),
   ('_strptime', 'C:\\Python27\\lib\\_strptime.py', 'PYMODULE'),
   ('calendar', 'C:\\Python27\\lib\\calendar.py', 'PYMODULE')])

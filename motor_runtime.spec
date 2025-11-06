@@ -2,7 +2,7 @@
 
 block_cipher = None
 
-# Analiza los archivos fuente y dependencias
+
 a = Analysis(['motor_runtime.py'],
              pathex=['C:\\Users\\Luan\\Documents\\GitHub\\Proyecto-Pr-ctico-TLP'],
              binaries=[],
@@ -14,11 +14,8 @@ a = Analysis(['motor_runtime.py'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher)
-
-# Empaqueta los módulos en un solo archivo
-pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
-
-# Genera el ejecutable final
+pyz = PYZ(a.pure, a.zipped_data,
+             cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
           a.binaries,
@@ -28,4 +25,4 @@ exe = EXE(pyz,
           debug=False,
           strip=False,
           upx=True,
-          console=False)
+          console=False )
