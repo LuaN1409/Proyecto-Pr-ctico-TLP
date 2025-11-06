@@ -1,5 +1,4 @@
 # -*- mode: python -*-
-# Configuración PyInstaller Ejecutable 
 
 block_cipher = None
 
