@@ -50,4 +50,12 @@ def main():
     motor.cerrar()
 
 if __name__ == "__main__":
-    main()
+    try:
+        motor = MotorJuego()
+        motor.run()
+    except Exception as e:
+        import traceback
+        # Guardamos cualquier error en un archivo para poder verlo
+        with open("error_log.txt", "w") as f:
+            f.write(traceback.format_exc())
+        print("Error fatal: %s" % e)
