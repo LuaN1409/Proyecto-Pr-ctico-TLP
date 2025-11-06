@@ -225,3 +225,11 @@ Encapsular toda la lógica de ventana y dibujo en un módulo simple y reutilizab
 ### Ejecutable
 
 - El ejecutable en `Ejecutable/` fue creado con PyInstaller. Windows puede advertir porque el `.exe` no está firmado. Si se prefiere evitar advertencias, ejecutar el script con Python en modo desarrollo.
+
+- Si quiere ejecutar el juego desde la consola del proyecto directamente, debe tener Python 2.7.18 y abrir la consola del proyecto (ctrl + ñ) y luego escribir el comando:
+
+ejecutar el siguiente comando en la terminal:
+
+```bash
+python motor_runtime.py
+```
