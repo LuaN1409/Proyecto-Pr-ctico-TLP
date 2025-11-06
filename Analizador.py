@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-analizador de lenguaje .brik
+analizador de lenguaje .brik - compatible con Python 2.7
 """
 
 import json
 import re
 import os
+import io
 
-class Tokenizer:
+class Tokenizer(object):
     def __init__(self, codigo):
         self.codigo = codigo
         self.tokens = []
@@ -42,7 +43,8 @@ class Tokenizer:
         
         return self.tokens
 
-class Parser:
+
+class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
         self.pos = 0
@@ -56,12 +58,12 @@ class Parser:
             # obtener clave
             clave = self.avanzar()
             if clave[0] != 'IDENTIFIER':
-                raise SyntaxError(f"se esperaba identificador, se encontró {clave[1]}")
+                raise SyntaxError("se esperaba identificador, se encontró %s" % clave[1])
             
             # obtener '='
             igual = self.avanzar()
             if igual[1] != '=':
-                raise SyntaxError(f"se esperaba '=', se encontró {igual[1]}")
+                raise SyntaxError("se esperaba '=', se encontró %s" % igual[1])
             
             # obtener valor
             valor = self.parsear_valor()
@@ -107,7 +109,7 @@ class Parser:
         elif tipo == 'OPERATOR' and valor == '[':
             return self.parsear_lista()
         
-        raise SyntaxError(f"valor inesperado: {valor}")
+        raise SyntaxError("valor inesperado: %s" % valor)
 
     def parsear_bloque(self):
         self.avanzar()  # consume '{'
@@ -116,11 +118,11 @@ class Parser:
         while self.peek() and self.peek()[1] != '}':
             clave = self.avanzar()
             if clave[0] != 'IDENTIFIER':
-                raise SyntaxError(f"se esperaba identificador en bloque")
+                raise SyntaxError("se esperaba identificador en bloque")
             
             separador = self.avanzar()
             if separador[1] not in ['=', ':']:
-                raise SyntaxError(f"se esperaba '=' o ':'")
+                raise SyntaxError("se esperaba '=' o ':'")
             
             valor = self.parsear_valor()
             bloque[clave[1]] = valor
@@ -151,23 +153,39 @@ class Parser:
         self.avanzar()  # consume ']'
         return lista
 
+
 def cargar_archivo(ruta):
     if not os.path.exists(ruta):
-        print(f"error: archivo '{ruta}' no encontrado")
+        print("error: archivo '%s' no encontrado" % ruta)
         return None
     
-    with open(ruta, 'r', encoding='utf-8') as f:
+    with io.open(ruta, 'r', encoding='utf-8') as f:
         return f.read()
 
+
 def guardar_ast(ast, ruta):
-    with open(ruta, 'w', encoding='utf-8') as f:
-        json.dump(ast, f, indent=2, ensure_ascii=False)
-    print(f"ast guardado en '{ruta}'")
+    """Guarda el AST en JSON manejando correctamente Unicode en Python 2.7"""
+    # Serializa el AST a texto JSON con indentación y sin escapar caracteres Unicode
+    data = json.dumps(ast, indent=2, ensure_ascii=False)
+    
+    # Si la salida es bytes (str en Python 2), la decodificamos a unicode
+    if isinstance(data, str):
+        data = data.decode('utf-8')
+    
+    with io.open(ruta, 'w', encoding='utf-8') as f:
+        f.write(data)
+    
+    print("ast guardado en '%s'" % ruta)
+
 
 def main():
     print("=== analizador de lenguaje .brik ===\n")
     
-    archivo = input("archivo a analizar (snake.brik / tetris.brik): ").strip()
+    try:
+        archivo = raw_input("archivo a analizar (snake.brik / tetris.brik): ").strip()
+    except NameError:
+        archivo = input("archivo a analizar (snake.brik / tetris.brik): ").strip()
+
     if not archivo:
         archivo = "tetris.brik"
     
@@ -184,14 +202,15 @@ def main():
         ast = parser.parsear()
         
         guardar_ast(ast, "arbol.ast")
-        print(f"análisis completado")
-        print(f"juego: {ast.get('juego')}")
-        print(f"campos: {len(ast)}")
+        print("análisis completado")
+        print("juego: %s" % ast.get('juego'))
+        print("campos: %d" % len(ast))
         
     except SyntaxError as e:
-        print(f"error de sintaxis: {e}")
+        print("error de sintaxis: %s" % e)
     except Exception as e:
-        print(f"error: {e}")
+        print("error: %s" % e)
+
 
 if __name__ == "__main__":
     main()
