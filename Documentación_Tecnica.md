@@ -230,6 +230,6 @@ Encapsular toda la lógica de ventana y dibujo en un módulo simple y reutilizab
 
 ejecutar el siguiente comando en la terminal:
 
-```bash
 python motor_runtime.py
-```
+
+O directamente ejecute el código desde motor_runtime.py

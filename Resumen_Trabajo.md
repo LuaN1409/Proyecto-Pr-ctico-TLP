@@ -53,6 +53,8 @@ Para verificar el funcionamiento del motor existen dos alternativas:
    python motor_runtime.py
    ```
 
+   O directamente ejecute el código desde motor_runtime.py
+
    Al iniciar, se abrirá una ventana de **640×480 píxeles** donde se visualizará un ladrillo rojo que puede moverse utilizando las teclas de dirección.
    El programa finaliza al presionar la tecla **Escape**.
 
