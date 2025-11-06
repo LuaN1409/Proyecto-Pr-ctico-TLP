@@ -1,7 +1,9 @@
 # Proyecto-Practico-TLP
 
 **Autores:** María José Restrepo Osorio · Diego Moncada Gómez
+
 **Asignatura:** Teoría de Lenguajes de Programación
+
 **Profesor:** Fernan Alonso Villa Garzón
 
 ---
