@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-input.py
-Módulo para manejo de entradas de teclado (tkinter)
+Módulo entradas teclado (tkinter)
 """
 
 class GestorEntrada(object):
