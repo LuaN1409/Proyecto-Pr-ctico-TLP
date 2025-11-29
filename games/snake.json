@@ -1,0 +1,118 @@
+{
+  "portales": {
+    "cantidad_pares": 2, 
+    "activados": true, 
+    "cooldown": 10000, 
+    "color_salida": "naranja", 
+    "duracion": 15000, 
+    "color_entrada": "azul"
+  }, 
+  "puntuacion": {
+    "por_fruta_normal": 10, 
+    "por_usar_portal": 25, 
+    "por_fruta_especial": 50, 
+    "combo": {
+      "frutas_consecutivas": 3, 
+      "activado": true, 
+      "max_bonus": 500, 
+      "bonus_inicial": 100, 
+      "incremento": 50
+    }
+  }, 
+  "obstaculos": {
+    "longitud_minima": 2, 
+    "longitud_maxima": 4, 
+    "color": "gris", 
+    "cantidad_maxima": 3, 
+    "margen_spawn": 3, 
+    "tiempo_advertencia": 2000, 
+    "generacion": "aleatoria", 
+    "cantidad_minima": 1, 
+    "advertencia_color": "amarillo_claro"
+  }, 
+  "controles": {
+    "izquierda": "LEFT", 
+    "arriba": "UP", 
+    "pausa": "P", 
+    "abajo": "DOWN", 
+    "derecha": "RIGHT"
+  }, 
+  "juego": "snake", 
+  "serpiente": {
+    "posicion_inicial": [
+      15, 
+      10
+    ], 
+    "direccion_inicial": "RIGHT", 
+    "color_cuerpo": "verde", 
+    "color_cabeza": "verde_claro", 
+    "longitud_inicial": 3, 
+    "crecimiento_por_fruta": 1
+  }, 
+  "niveles": [
+    {
+      "portales": false, 
+      "frutas_requeridas": 10, 
+      "velocidad": 200, 
+      "obstaculos": 0, 
+      "numero": 1, 
+      "nombre": "inicio"
+    }, 
+    {
+      "portales": true, 
+      "frutas_requeridas": 15, 
+      "velocidad": 150, 
+      "obstaculos": 2, 
+      "numero": 2, 
+      "nombre": "portal"
+    }, 
+    {
+      "portales": true, 
+      "frutas_requeridas": 20, 
+      "velocidad": 100, 
+      "obstaculos": 4, 
+      "numero": 3, 
+      "nombre": "caos"
+    }
+  ], 
+  "fin_juego": [
+    "choque_con_pared", 
+    "choque_con_cuerpo", 
+    "choque_con_obstaculo"
+  ], 
+  "frutas": {
+    "fresa": {
+      "probabilidad": 0.1, 
+      "color": "rosa", 
+      "duracion_efecto": 4000, 
+      "puntos": 20, 
+      "tiempo_vida": 6000, 
+      "efecto": "ralentizar"
+    }, 
+    "manzana": {
+      "color": "rojo", 
+      "puntos": 10, 
+      "efecto": "crecer"
+    }, 
+    "banana": {
+      "color": "amarillo", 
+      "tiempo_vida": 5000, 
+      "puntos": 50, 
+      "efecto": "puntos_extra", 
+      "probabilidad": 0.15
+    }
+  }, 
+  "pantalla": {
+    "alto": 20, 
+    "ancho": 30, 
+    "tamano_celda": 20, 
+    "color_fondo": "negro", 
+    "color_grid": "gris_oscuro", 
+    "grid_visible": true
+  }, 
+  "titulo": "snake dimensional", 
+  "mecanicas": {
+    "paredes_solidas": true, 
+    "atravesar_bordes": false
+  }
+}

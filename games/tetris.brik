@@ -1,0 +1,182 @@
+# juego de tetris dimensional
+
+juego = "tetris"
+titulo = "tetris dimensional"
+
+# configuración de pantalla
+pantalla = {
+    ancho = 10,
+    alto = 20,
+    color_fondo = "negro",
+    grid_visible = true,
+    color_grid = "gris_oscuro"
+}
+
+# piezas normales del juego
+piezas = {
+    I = {
+        color = "cyan",
+        forma = [
+            [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
+            [[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]]
+        ]
+    },
+    O = {
+        color = "amarillo",
+        forma = [[[1,1],[1,1]]]
+    },
+    T = {
+        color = "magenta",
+        forma = [
+            [[0,1,0],[1,1,1],[0,0,0]],
+            [[0,1,0],[0,1,1],[0,1,0]],
+            [[0,0,0],[1,1,1],[0,1,0]],
+            [[0,1,0],[1,1,0],[0,1,0]]
+        ]
+    },
+    S = {
+        color = "verde",
+        forma = [
+            [[0,1,1],[1,1,0],[0,0,0]],
+            [[0,1,0],[0,1,1],[0,0,1]]
+        ]
+    },
+    Z = {
+        color = "rojo",
+        forma = [
+            [[1,1,0],[0,1,1],[0,0,0]],
+            [[0,0,1],[0,1,1],[0,1,0]]
+        ]
+    },
+    J = {
+        color = "azul",
+        forma = [
+            [[1,0,0],[1,1,1],[0,0,0]],
+            [[0,1,1],[0,1,0],[0,1,0]],
+            [[0,0,0],[1,1,1],[0,0,1]],
+            [[0,1,0],[0,1,0],[1,1,0]]
+        ]
+    },
+    L = {
+        color = "naranja",
+        forma = [
+            [[0,0,1],[1,1,1],[0,0,0]],
+            [[0,1,0],[0,1,0],[0,1,1]],
+            [[0,0,0],[1,1,1],[1,0,0]],
+            [[1,1,0],[0,1,0],[0,1,0]]
+        ]
+    }
+}
+
+# piezas especiales
+especiales = {
+    bomba = {
+        color = "rojo_brillante",
+        forma = [[[1]]],
+        efecto = "explotar_area",
+        radio = 2,
+        probabilidad = 0.06,
+        puntos_bonus = 200
+    },
+    relleno = {
+        color = "verde_claro",
+        forma = [[[1]]],
+        efecto = "rellenar_fila",
+        probabilidad = 0.05,
+        puntos_bonus = 250,
+        descripcion = "rellena_huecos_de_la_fila_donde_cae"
+    },
+    linea_completa = {
+        color = "azul_electrico",
+        forma = [[[1]]],
+        efecto = "eliminar_fila",
+        probabilidad = 0.04,
+        puntos_bonus = 300,
+        descripcion = "elimina_fila_completa_al_caer"
+    },
+    explosion_cruz = {
+        color = "morado_brillante",
+        forma = [[[1]]],
+        efecto = "explotar_cruz",
+        alcance = 3,
+        probabilidad = 0.05,
+        puntos_bonus = 200,
+        descripcion = "explota_en_forma_de_cruz"
+    },
+    dorado = {
+        color = "dorado",
+        forma = [[[1]]],
+        efecto = "puntos_extra",
+        multiplicador = 3,
+        probabilidad = 0.08,
+        puntos_bonus = 500,
+        descripcion = "triplica_puntos_de_siguiente_linea"
+    }
+}
+
+# niveles de dificultad
+niveles = [
+    { 
+        numero = 1, 
+        nombre = "inicio", 
+        velocidad = 1000, 
+        lineas_requeridas = 10,
+        especiales_activados = false
+    },
+    { 
+        numero = 2, 
+        nombre = "intermedio", 
+        velocidad = 700, 
+        lineas_requeridas = 15,
+        especiales_activados = true,
+        probabilidad_especial = 0.15
+    },
+    { 
+        numero = 3, 
+        nombre = "avanzado", 
+        velocidad = 400, 
+        lineas_requeridas = 20,
+        especiales_activados = true,
+        probabilidad_especial = 0.25
+    }
+]
+
+# teclas de control
+controles = {
+    mover_izquierda = "LEFT",
+    mover_derecha = "RIGHT",
+    rotar = "UP",
+    caida_rapida = "DOWN",
+    caida_instantanea = "SPACE",
+    guardar = "C",
+    pausa = "P"
+}
+
+# sistema de puntuación
+puntuacion = {
+    linea_simple = 100,
+    linea_doble = 300,
+    linea_triple = 500,
+    tetris = 800,
+    uso_especial = 150,
+    combo = {
+        activado = true,
+        multiplicador_base = 50,
+        max_multiplicador = 5,
+        bonus_especial_en_combo = 200
+    }
+}
+
+# características del juego
+mecanicas = {
+    pieza_guardada = true,
+    piezas_siguientes = 3,
+    pieza_fantasma = true,
+    delay_bloqueo = 500
+}
+
+# condiciones de fin
+fin_juego = [
+    "bloqueo_en_spawn",
+    "altura_maxima"
+]

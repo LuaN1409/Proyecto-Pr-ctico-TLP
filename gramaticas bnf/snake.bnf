@@ -1,0 +1,67 @@
+# Esta gramática describe la sintaxis válida del lenguaje
+# BRIK utilizado para definir juegos como Snake y Tetris.
+#
+# Corresponde exactamente al analizador implementado en
+# analizador.py (Python 2.7) y es capaz de reconocer:
+# - Asignaciones clave = valor
+# - Bloques { ... }
+# - Listas [ ... ]
+# - Strings
+# - Números (enteros y flotantes)
+# - Booleanos (true / false)
+# ======================================================
+
+<programa> ::= <lista_de_asignaciones>
+
+<lista_de_asignaciones> ::= <asignacion>
+                          | <asignacion> <lista_de_asignaciones>
+
+<asignacion> ::= <identificador> "=" <valor>
+
+<valor> ::= <string>
+          | <numero>
+          | <booleano>
+          | <bloque>
+          | <lista>
+
+<string> ::= "\"" <caracteres>* "\""
+
+<numero> ::= <digitos>
+           | <digitos> "." <digitos>
+
+<booleano> ::= "true" | "false"
+
+<identificador> ::= <letra> <identificador_restante>
+
+<identificador_restante> ::= ""
+                            | <letra> <identificador_restante>
+                            | <digito> <identificador_restante>
+
+<bloque> ::= "{" <contenido_bloque> "}"
+
+<contenido_bloque> ::= <par_clave_valor>
+                      | <par_clave_valor> "," <contenido_bloque>
+
+<par_clave_valor> ::= <identificador> <separador> <valor>
+
+<separador> ::= "=" | ":"
+
+<lista> ::= "[" <contenido_lista> "]"
+
+<contenido_lista> ::= <valor>
+                     | <valor> "," <contenido_lista>
+
+<digitos> ::= <digito>
+            | <digito> <digitos>
+
+<digito> ::= "0" | "1" | "2" | "3" | "4"
+           | "5" | "6" | "7" | "8" | "9"
+
+<letra> ::= "a" | ... | "z"
+          | "A" | ... | "Z"
+          | "_"
+
+<caracteres> ::= <caracter>
+               | <caracter> <caracteres>
+
+<caracter> ::= cualquier carácter EXCEPTO comillas dobles

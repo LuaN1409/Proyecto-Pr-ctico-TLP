@@ -1,0 +1,513 @@
+{
+  "piezas": {
+    "I": {
+      "color": "cyan", 
+      "forma": [
+        [
+          [
+            0, 
+            0, 
+            0, 
+            0
+          ], 
+          [
+            1, 
+            1, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            0, 
+            0, 
+            0
+          ], 
+          [
+            0, 
+            0, 
+            0, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            1, 
+            0, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0, 
+            0
+          ]
+        ]
+      ]
+    }, 
+    "J": {
+      "color": "azul", 
+      "forma": [
+        [
+          [
+            1, 
+            0, 
+            0
+          ], 
+          [
+            1, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            0, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            0, 
+            0
+          ], 
+          [
+            1, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            0, 
+            1
+          ]
+        ], 
+        [
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            1, 
+            1, 
+            0
+          ]
+        ]
+      ]
+    }, 
+    "L": {
+      "color": "naranja", 
+      "forma": [
+        [
+          [
+            0, 
+            0, 
+            1
+          ], 
+          [
+            1, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            0, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            1
+          ]
+        ], 
+        [
+          [
+            0, 
+            0, 
+            0
+          ], 
+          [
+            1, 
+            1, 
+            1
+          ], 
+          [
+            1, 
+            0, 
+            0
+          ]
+        ], 
+        [
+          [
+            1, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ]
+        ]
+      ]
+    }, 
+    "O": {
+      "color": "amarillo", 
+      "forma": [
+        [
+          [
+            1, 
+            1
+          ], 
+          [
+            1, 
+            1
+          ]
+        ]
+      ]
+    }, 
+    "S": {
+      "color": "verde", 
+      "forma": [
+        [
+          [
+            0, 
+            1, 
+            1
+          ], 
+          [
+            1, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            0, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            0, 
+            1
+          ]
+        ]
+      ]
+    }, 
+    "T": {
+      "color": "magenta", 
+      "forma": [
+        [
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            1, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            0, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            0, 
+            0
+          ], 
+          [
+            1, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            1, 
+            0
+          ], 
+          [
+            1, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ]
+        ]
+      ]
+    }, 
+    "Z": {
+      "color": "rojo", 
+      "forma": [
+        [
+          [
+            1, 
+            1, 
+            0
+          ], 
+          [
+            0, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            0, 
+            0
+          ]
+        ], 
+        [
+          [
+            0, 
+            0, 
+            1
+          ], 
+          [
+            0, 
+            1, 
+            1
+          ], 
+          [
+            0, 
+            1, 
+            0
+          ]
+        ]
+      ]
+    }
+  }, 
+  "especiales": {
+    "explosion_cruz": {
+      "forma": [
+        [
+          [
+            1
+          ]
+        ]
+      ], 
+      "probabilidad": 0.05, 
+      "color": "morado_brillante", 
+      "alcance": 3, 
+      "efecto": "explotar_cruz", 
+      "descripcion": "explota_en_forma_de_cruz", 
+      "puntos_bonus": 200
+    }, 
+    "linea_completa": {
+      "forma": [
+        [
+          [
+            1
+          ]
+        ]
+      ], 
+      "probabilidad": 0.04, 
+      "color": "azul_electrico", 
+      "efecto": "eliminar_fila", 
+      "descripcion": "elimina_fila_completa_al_caer", 
+      "puntos_bonus": 300
+    }, 
+    "bomba": {
+      "forma": [
+        [
+          [
+            1
+          ]
+        ]
+      ], 
+      "probabilidad": 0.06, 
+      "color": "rojo_brillante", 
+      "radio": 2, 
+      "puntos_bonus": 200, 
+      "efecto": "explotar_area"
+    }, 
+    "dorado": {
+      "forma": [
+        [
+          [
+            1
+          ]
+        ]
+      ], 
+      "probabilidad": 0.08, 
+      "color": "dorado", 
+      "multiplicador": 3, 
+      "efecto": "puntos_extra", 
+      "descripcion": "triplica_puntos_de_siguiente_linea", 
+      "puntos_bonus": 500
+    }, 
+    "relleno": {
+      "forma": [
+        [
+          [
+            1
+          ]
+        ]
+      ], 
+      "probabilidad": 0.05, 
+      "color": "verde_claro", 
+      "efecto": "rellenar_fila", 
+      "descripcion": "rellena_huecos_de_la_fila_donde_cae", 
+      "puntos_bonus": 250
+    }
+  }, 
+  "fin_juego": [
+    "bloqueo_en_spawn", 
+    "altura_maxima"
+  ], 
+  "controles": {
+    "caida_rapida": "DOWN", 
+    "mover_izquierda": "LEFT", 
+    "rotar": "UP", 
+    "caida_instantanea": "SPACE", 
+    "pausa": "P", 
+    "mover_derecha": "RIGHT", 
+    "guardar": "C"
+  }, 
+  "juego": "tetris", 
+  "niveles": [
+    {
+      "nombre": "inicio", 
+      "especiales_activados": false, 
+      "velocidad": 1000, 
+      "numero": 1, 
+      "lineas_requeridas": 10
+    }, 
+    {
+      "velocidad": 700, 
+      "lineas_requeridas": 15, 
+      "numero": 2, 
+      "nombre": "intermedio", 
+      "probabilidad_especial": 0.15, 
+      "especiales_activados": true
+    }, 
+    {
+      "velocidad": 400, 
+      "lineas_requeridas": 20, 
+      "numero": 3, 
+      "nombre": "avanzado", 
+      "probabilidad_especial": 0.25, 
+      "especiales_activados": true
+    }
+  ], 
+  "puntuacion": {
+    "uso_especial": 150, 
+    "linea_triple": 500, 
+    "linea_doble": 300, 
+    "linea_simple": 100, 
+    "combo": {
+      "bonus_especial_en_combo": 200, 
+      "activado": true, 
+      "max_multiplicador": 5, 
+      "multiplicador_base": 50
+    }, 
+    "tetris": 800
+  }, 
+  "mecanicas": {
+    "delay_bloqueo": 500, 
+    "pieza_guardada": true, 
+    "pieza_fantasma": true, 
+    "piezas_siguientes": 3
+  }, 
+  "pantalla": {
+    "alto": 20, 
+    "color_fondo": "negro", 
+    "color_grid": "gris_oscuro", 
+    "ancho": 10, 
+    "grid_visible": true
+  }, 
+  "titulo": "tetris dimensional"
+}
