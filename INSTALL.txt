@@ -1,0 +1,128 @@
+
+MOTOR BRIK - INSTALACIÓN
+
+REQUISITOS DEL SISTEMA
+
+Hardware mínimo:
+  • Procesador: AMD Athlon XP o superior
+  • RAM: 256 MB
+  • Espacio en disco: 2 MB
+  • Pantalla: 640x480 píxeles mínimo
+
+Software requerido:
+  • Sistema operativo: Windows XP SP3 o superior / Linux / macOS
+  • Python 2.7.x (con Tkinter incluido)
+  • Espacio total del proyecto: < 1.44 MB (cabe en un disquete)
+
+
+INSTALACIÓN EN WINDOWS
+
+Instalación automática con Python ya instalado
+
+1. Descomprimir el archivo .zip en una carpeta de su elección
+
+2. Verificar que Python 2.7 esté instalado:
+   - Abrir CMD (Símbolo del sistema)
+   - Ejecutar: python --version
+   - Debe mostrar: Python 2.7.x
+
+3. Ejecutar el juego:
+   - Doble clic en: jugar.bat
+   - Desde CMD: python runtime.py
+   - Ejecutar el archivo runtime.py de la carpeta en la que haya descomprimido desde el compilador que esté usando (Visual code, etc)
+
+
+
+INSTALACIÓN EN LINUX
+================================================================================
+
+1. Instalar Python 2.7 y Tkinter:
+   
+   Ubuntu/Debian:
+   $ sudo apt-get update
+   $ sudo apt-get install python2.7 python-tk
+   
+   Fedora/CentOS:
+   $ sudo yum install python2 tkinter
+   
+   Arch Linux:
+   $ sudo pacman -S python2 tk
+
+2. Verificar instalación:
+   $ python2 --version
+   $ python2 -m Tkinter
+
+3. Descomprimir el proyecto
+
+4. Dar permisos de ejecución (opcional):
+   $ chmod +x runtime.py
+   $ chmod +x compiler.py
+
+5. Ejecutar:
+   $ python2 runtime.py
+
+
+INSTALACIÓN EN macOS
+================================================================================
+
+1. Python 2.7 viene preinstalado en macOS 10.8 a 10.14
+   
+   Para versiones más recientes, instalar con Homebrew:
+   $ brew install python@2
+
+2. Verificar Tkinter:
+   $ python2 -c "import Tkinter; print('OK')"
+
+3. Descomprimir el proyecto
+
+4. Ejecutar desde Terminal:
+   $ python2 runtime.py
+
+
+ESTRUCTURA DEL PROYECTO
+================================================================================
+
+Motor-Brik/
+│
+├── games/                   # Carpeta de juegos
+│   ├── snake.brik           # Código fuente Snake
+│   ├── snake.json           # JSON compilado Snake
+│   ├── tetris.brik          # Código fuente Tetris
+│   └── tetris.json          # JSON compilado Tetris
+│
+├── gramaticas_bnf/          # Gramáticas formales
+│   ├── snake.bnf            # Gramática BNF de Snake
+│   └── tetris.bnf           # Gramática BNF de Tetris
+│
+├── compiler.py             # Compilador .brik → .json
+├── runtime.py              # Motor de ejecución
+├── jugar.bat               # Lanzador para Windows
+├── INSTALL.txt             # Este archivo
+├── README.txt              # Documentación del proyecto
+└── integrantes.txt         # Información del equipo
+
+
+SOLUCIÓN DE PROBLEMAS COMUNES
+
+Problema: "python no se reconoce como comando"
+Solución: 
+  - Agregar Python al PATH del sistema
+  - O usar ruta completa: C:\Python27\python.exe runtime.py
+
+
+Problema: "ImportError: No module named Tkinter"
+Solución:
+  - Reinstalar Python 2.7 seleccionando "tcl/tk and IDLE"
+  - En Linux: instalar python-tk o python2-tk
+
+
+Problema: "SyntaxError al ejecutar"
+Solución:
+  - Verificar que está usando Python 2.7, NO Python 3.x
+  - Ejecutar explícitamente: python2 runtime.py
+
+
+Problema: "Archivo snake.json no encontrado"
+Solución:
+  - Compilar primero: python compiler.py snake.brik
+  - Verificar que existe la carpeta games/

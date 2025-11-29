@@ -1,5 +1,14 @@
-Integrantes: 
 
-María José Restrepo Osorio
+MOTOR BRIK - PROYECTO PRÁCTICO
 
-Diego Moncada Gómez
+Universidad Nacional de Colombia - Sede Medellín
+Teoría de Lenguajes de Programación 
+
+
+INTEGRANTES DEL EQUIPO
+
+- María José Restrepo Osorio
+correo: marestrepoo@unal.edu.co
+
+- Diego Moncada Gómez
+correo: dmoncadag@unal.edu.co
